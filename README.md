@@ -1,5 +1,9 @@
 # DevBlog - Community-driven platform for developers
 
+<p align="center">
+  <img src="Logo.png">
+</p>
+
 ```sh
 npm create astro@latest -- --template minimal
 ```

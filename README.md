@@ -1,4 +1,4 @@
-# Astro Starter Kit: Minimal
+# DevBlog - Community-driven platform for developers
 
 ```sh
 npm create astro@latest -- --template minimal
@@ -8,22 +8,39 @@ npm create astro@latest -- --template minimal
 
 ## 🚀 Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
+This project follows a standard Astro structure with organized components and content collections:
 
 ```text
 /
-├── public/
 ├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/       # Reusable UI components
+│   │   ├── Header.astro       # Navbar with search and mobile menu
+│   │   ├── Footer.astro       # Balanced site footer
+│   │   ├── Sidebar.astro      # Main blog sidebar with trending tags
+│   │   ├── PostSidebarRight.astro # TOC and related posts for articles
+│   │   └── ArchiveCard.astro  # Card component for archive grid
+│   ├── content/          # Markdown content and schemas
+│   │   ├── posts/             # Blog articles in Markdown
+│   │   └── config.ts          # Content collection schema definitions
+│   ├── layouts/          # Main page layouts
+│   │   └── Layout.astro       # Base template with fonts and meta tags
+│   ├── pages/            # App routing (Astro File-based Routing)
+│   │   ├── index.astro        # Home page
+│   │   ├── archive.astro      # Filterable archive with pagination
+│   │   └── posts/[...slug].astro # Dynamic blog post template
+│   └── styles/           # Global styles
+│       └── global.css         # Tailwind v4 configuration and custom styles
+├── public/               # Static assets (images, robots.txt, etc.)
+└── astro.config.mjs      # Astro configuration file
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
+### Key Features
+- **Modern Tech Stack**: Astro 5 + Tailwind CSS v4.
+- **Dynamic Content**: Managed via Content Collections for type-safety.
+- **Interactive Search**: Real-time article search in the header.
+- **Responsive Navigation**: Full-screen mobile menu with animations.
+- **Advanced Filtering**: Categorize and filter posts by topics and tags.
+- **Smart Pagination**: Numbered navigation for large post archives.
 
 ## 🧞 Commands
 

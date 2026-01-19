@@ -1,0 +1,125 @@
+---
+interface Props {
+    title: string;
+    description: string;
+    image: string;
+    category: string;
+    author: string;
+    authorImage?: string;
+    date: string;
+    readTime: string;
+    featured?: boolean;
+    slug?: string;
+}
+
+const {
+    title,
+    description,
+    image,
+    category,
+    author,
+    authorImage,
+    date,
+    readTime,
+    featured = false,
+    slug,
+} = Astro.props;
+
+const url = `/posts/${slug}`;
+---
+
+{
+    featured ? (
+        <article class="group relative bg-card-light dark:bg-card-dark rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-white/5 mb-8">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 pointer-events-none" />
+            <div class="aspect-w-16 aspect-h-9 h-96 w-full relative">
+                <img
+                    src={image}
+                    alt={title}
+                    class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
+                />
+            </div>
+            <div class="absolute bottom-0 left-0 p-8 z-20 w-full">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="px-3 py-1 rounded-full bg-primary text-background-dark text-xs font-bold uppercase tracking-wider">
+                        {category}
+                    </span>
+                    <span class="text-slate-300 text-xs flex items-center">
+                        <span class="material-icons text-[14px] mr-1">
+                            schedule
+                        </span>{" "}
+                        {readTime}
+                    </span>
+                </div>
+                <a href={url}>
+                    <h3 class="text-3xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
+                        {title}
+                    </h3>
+                </a>
+                <p class="text-slate-300 mb-4 line-clamp-2 max-w-2xl">
+                    {description}
+                </p>
+                <div class="flex items-center">
+                    {authorImage && (
+                        <img
+                            src={authorImage}
+                            alt={author}
+                            class="w-8 h-8 rounded-full border-2 border-primary mr-3"
+                        />
+                    )}
+                    <div class="text-sm">
+                        <p class="text-white font-medium">{author}</p>
+                        <p class="text-slate-400 text-xs">{date}</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    ) : (
+        <article class="group flex flex-col h-full bg-card-light dark:bg-card-dark rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-200 dark:border-white/5 hover:border-primary/50">
+            <a href={url} class="h-48 overflow-hidden relative block">
+                <div class="absolute top-4 left-4 z-10">
+                    <span class="px-2 py-1 rounded-md bg-black/60 backdrop-blur-sm text-primary text-xs font-bold border border-primary/30">
+                        {category}
+                    </span>
+                </div>
+                <img
+                    src={image}
+                    alt={title}
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+            </a>
+            <div class="p-6 flex flex-col flex-grow">
+                <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-3">
+                    <span class="material-icons text-[14px]">
+                        calendar_today
+                    </span>{" "}
+                    {date}
+                    <span class="mx-1">•</span>
+                    <span class="material-icons text-[14px]">timer</span>{" "}
+                    {readTime}
+                </div>
+                <a href={url}>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors leading-tight">
+                        {title}
+                    </h3>
+                </a>
+                <p class="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-3 flex-grow">
+                    {description}
+                </p>
+                <div class="mt-auto pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <span class="text-xs font-medium text-slate-700 dark:text-slate-300">
+                            By {author}
+                        </span>
+                    </div>
+                    <a
+                        href={url}
+                        class="material-icons text-primary text-sm group-hover:translate-x-1 transition-transform"
+                    >
+                        arrow_forward
+                    </a>
+                </div>
+            </div>
+        </article>
+    )
+}

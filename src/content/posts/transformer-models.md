@@ -4,6 +4,7 @@ description: "Transformers are conquering computer vision and audio processing. 
 pubDate: 2023-10-22
 author: "Devsebastian44"
 authorImage: "https://avatars.githubusercontent.com/u/146502229?v=4"
+image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDWiZO41vXi_jaq2x-IhUE_siOAiu-4Emuo5BxKJU9gTT2i9KodJsuKTvKtQ6A_27_3Epehjbf5o2hcIaaL0SuF69iXiupVTi95len1SFhpvq2N58pnkfrZzZXAf6WHUCb_LQmw6TnFuwjts7VlEzkfHBL75Z66_nPK5SQOCDiX0YI4qB68ev-K-TmzgLx_p7MW4Vb_zdXeDZh6LKDryPQxhQb5EAWZgVnGupnJpHuhAjRHVFaEccRIaXQms3GIfWezXS7zySidu5g"
 category: "AI & ML"
 subCategory: "Neural Networks"
 readTime: "5 min read"

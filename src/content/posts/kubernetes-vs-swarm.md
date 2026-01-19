@@ -1,10 +1,10 @@
-```
 ---
 title: "Kubernetes vs Docker Swarm in 2024"
 description: "Is Swarm still relevant for smaller teams, or has K8s become easy enough for everyone?"
 pubDate: 2023-10-12
 author: "Devsebastian44"
 authorImage: "https://avatars.githubusercontent.com/u/146502229?v=4"
+image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBWuzRnUHfpLFv2QjUFWfkd5ZPOK_mxnoxiYEPTR4vxok2ZdVc3hgfhYs9K6mLJOOviN4X9GwOdrIRhutPSzz5OgVgSXjddppnAN9zF1DnIVqtF9cHGNbLf2B44NDM9gT9CCzm9VeBl_y4ItmFHMAzHjDKAkn2wkYfkbasm-qfmFizSb7FamkzJDUiFjasntAKtPUflFTOUi7ZpOCrhj2HvVeNXHkse7rG1wnxlKDm_CcuvnWq9v4CWk0mBk64ivkcJNN4BxJzS-DA"
 category: "DevOps"
 subCategory: "Orchestration"
 readTime: "6 min read"

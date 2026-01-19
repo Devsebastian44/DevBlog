@@ -4,6 +4,7 @@ description: "Exploring the shift towards ELT and how tools like dbt and Snowfla
 pubDate: 2023-10-15
 author: "Devsebastian44"
 authorImage: "https://avatars.githubusercontent.com/u/146502229?v=4"
+image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBZRVVa2-j3KXsa1BLcYsx1aivdbw7ZFS8lPzRW7DPc2ZNGgyI0PZlJ5MrV1MLS6cRB6gZZSmd4QgfGI1JxG6jCdSAxRzeCSFdGfExgg8nfEhlAvbwnvodyTyISqoPhFVXLAr5LmvJH8jfiigHxsTcT_WZMH2jZW_ipn8_dhGybvz9fzp4AxTlO0nys1LAfjeHs6wWC9PPJbatyFPYts6KXeo20T10Nv1-Ud3AVIsODhHu_jNCTsLVE2voD6I99lhrtIuS8IHySIQI"
 category: "Data Science"
 subCategory: "Data Engineering"
 readTime: "7 min read"

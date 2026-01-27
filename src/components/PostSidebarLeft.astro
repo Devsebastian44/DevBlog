@@ -1,25 +1,36 @@
 ---
+interface Props {
+    slug: string;
+}
 
+const { slug } = Astro.props;
 ---
 
 <aside
     class="hidden lg:block lg:col-span-1 sticky top-24 self-start flex flex-col items-center gap-6"
 >
+    <!-- Like Button -->
     <button
+        id="like-btn-desktop"
         class="group flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors"
+        data-slug={slug}
     >
         <div
-            class="p-2 rounded-full group-hover:bg-primary/10 transition-colors"
+            class="p-2 rounded-full group-hover:bg-primary/10 transition-colors relative"
         >
             <span
-                class="material-symbols-outlined"
+                class="material-symbols-outlined transition-all duration-300"
+                id="like-icon-desktop"
                 style="font-variation-settings: 'FILL' 0, 'wght' 300;"
                 >thumb_up</span
             >
         </div>
-        <span class="text-xs font-medium">2.4k</span>
+        <span class="text-xs font-medium" id="like-count-desktop">--</span>
     </button>
+
+    <!-- Comment Button -->
     <button
+        id="comment-btn-desktop"
         class="group flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors"
     >
         <div
@@ -27,28 +38,37 @@
         >
             <span
                 class="material-symbols-outlined"
-                style="font-variation-settings: 'FILL' 0, 'wght' 300;"
+                style="font-variation-settings: 'FILL' 1, 'wght' 300;"
                 >chat_bubble</span
             >
         </div>
-        <span class="text-xs font-medium">48</span>
+        <span class="text-xs font-medium" id="comment-count-desktop">--</span>
     </button>
+
+    <!-- Bookmark Button -->
     <button
+        id="bookmark-btn-desktop"
         class="group flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors"
     >
         <div
             class="p-2 rounded-full group-hover:bg-primary/10 transition-colors"
         >
             <span
-                class="material-symbols-outlined"
+                class="material-symbols-outlined transition-all duration-300"
+                id="bookmark-icon-desktop"
                 style="font-variation-settings: 'FILL' 0, 'wght' 300;"
                 >bookmark</span
             >
         </div>
+        <span class="text-xs font-medium sm:hidden">Save</span>
     </button>
+
     <div class="w-8 h-[1px] bg-slate-200 dark:bg-slate-700 my-2"></div>
+
+    <!-- Share Button -->
     <button
         class="group flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors"
+        onclick="navigator.clipboard.writeText(window.location.href); alert('Link copiado!')"
     >
         <div
             class="p-2 rounded-full group-hover:bg-primary/10 transition-colors"
@@ -68,28 +88,251 @@
 >
     <div class="flex items-center justify-around">
         <button
+            id="like-btn-mobile"
             class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary active:text-primary"
+            data-slug={slug}
         >
-            <span class="material-symbols-outlined">thumb_up</span>
-            <span class="text-[10px] font-medium">2.4k</span>
+            <span
+                class="material-symbols-outlined"
+                id="like-icon-mobile"
+                style="font-variation-settings: 'FILL' 0, 'wght' 300;"
+                >thumb_up</span
+            >
+            <span class="text-[10px] font-medium" id="like-count-mobile"
+                >--</span
+            >
         </button>
         <button
+            id="comment-btn-mobile"
             class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary active:text-primary"
         >
-            <span class="material-symbols-outlined">chat_bubble</span>
-            <span class="text-[10px] font-medium">48</span>
+            <span
+                class="material-symbols-outlined"
+                style="font-variation-settings: 'FILL' 1, 'wght' 300;"
+                >chat_bubble</span
+            >
+            <span class="text-[10px] font-medium" id="comment-count-mobile"
+                >--</span
+            >
         </button>
         <button
+            id="bookmark-btn-mobile"
             class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary active:text-primary"
         >
-            <span class="material-symbols-outlined">bookmark</span>
+            <span
+                class="material-symbols-outlined"
+                id="bookmark-icon-mobile"
+                style="font-variation-settings: 'FILL' 0, 'wght' 300;"
+                >bookmark</span
+            >
             <span class="text-[10px] font-medium">Save</span>
         </button>
         <button
             class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary active:text-primary"
+            onclick="navigator.clipboard.writeText(window.location.href); alert('Link copiado!')"
         >
             <span class="material-symbols-outlined">share</span>
             <span class="text-[10px] font-medium">Share</span>
         </button>
     </div>
 </div>
+
+<script>
+    import { supabase } from "../lib/supabase";
+
+    const slug = document.getElementById("like-btn-desktop")?.dataset.slug;
+
+    // Like Elements
+    const likeBtnDesktop = document.getElementById("like-btn-desktop");
+    const likeIconDesktop = document.getElementById("like-icon-desktop");
+    const likeCountDesktop = document.getElementById("like-count-desktop");
+    const likeBtnMobile = document.getElementById("like-btn-mobile");
+    const likeIconMobile = document.getElementById("like-icon-mobile");
+    const likeCountMobile = document.getElementById("like-count-mobile");
+
+    // Comment Elements
+    const commentBtnDesktop = document.getElementById("comment-btn-desktop");
+    const commentBtnMobile = document.getElementById("comment-btn-mobile");
+    const commentCountDesktop = document.getElementById(
+        "comment-count-desktop",
+    );
+    const commentCountMobile = document.getElementById("comment-count-mobile");
+
+    // Bookmark Elements
+    const bookmarkBtnDesktop = document.getElementById("bookmark-btn-desktop");
+    const bookmarkIconDesktop = document.getElementById(
+        "bookmark-icon-desktop",
+    );
+    const bookmarkBtnMobile = document.getElementById("bookmark-btn-mobile");
+    const bookmarkIconMobile = document.getElementById("bookmark-icon-mobile");
+
+    // Scroll to comments
+    const scrollToComments = () => {
+        document
+            .getElementById("comments-section")
+            ?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    commentBtnDesktop?.addEventListener("click", scrollToComments);
+    commentBtnMobile?.addEventListener("click", scrollToComments);
+
+    // State
+    let likeCount = 0;
+    let commentCount = 0;
+    let isLiked = false;
+    let isBookmarked = false;
+    let user = null;
+
+    async function init() {
+        if (!slug) return;
+
+        // Get User
+        const {
+            data: { session },
+        } = await supabase.auth.getSession();
+        user = session?.user || null;
+
+        await Promise.all([
+            fetchLikes(),
+            fetchCommentsCount(),
+            fetchBookmarkStatus(),
+        ]);
+
+        updateUI();
+    }
+
+    async function fetchLikes() {
+        const { count, error } = await supabase
+            .from("likes")
+            .select("*", { count: "exact", head: true })
+            .eq("post_slug", slug);
+
+        if (!error && count !== null) {
+            likeCount = count;
+        }
+
+        if (user) {
+            const { data } = await supabase
+                .from("likes")
+                .select("*")
+                .eq("post_slug", slug)
+                .eq("user_id", user.id)
+                .single();
+
+            if (data) isLiked = true;
+        }
+    }
+
+    async function fetchCommentsCount() {
+        const { count, error } = await supabase
+            .from("comments")
+            .select("*", { count: "exact", head: true })
+            .eq("post_slug", slug);
+
+        if (!error && count !== null) {
+            commentCount = count;
+        }
+    }
+
+    async function fetchBookmarkStatus() {
+        if (!user) return;
+
+        const { data } = await supabase
+            .from("bookmarks")
+            .select("*")
+            .eq("post_slug", slug)
+            .eq("user_id", user.id)
+            .single();
+
+        if (data) isBookmarked = true;
+    }
+
+    function updateUI() {
+        const formatCount = (n) =>
+            n > 1000 ? `${(n / 1000).toFixed(1)}k` : n.toString();
+
+        // Likes UI
+        const likeCountText = formatCount(likeCount);
+        if (likeCountDesktop) likeCountDesktop.textContent = likeCountText;
+        if (likeCountMobile) likeCountMobile.textContent = likeCountText;
+
+        const updateLikeIcon = (icon) => {
+            if (!icon) return;
+            icon.style.fontVariationSettings = `'FILL' ${isLiked ? 1 : 0}, 'wght' 300`;
+            if (isLiked) icon.classList.add("text-primary");
+            else icon.classList.remove("text-primary");
+        };
+        updateLikeIcon(likeIconDesktop);
+        updateLikeIcon(likeIconMobile);
+
+        // Comments UI
+        const commentCountText = formatCount(commentCount);
+        if (commentCountDesktop)
+            commentCountDesktop.textContent = commentCountText;
+        if (commentCountMobile)
+            commentCountMobile.textContent = commentCountText;
+
+        // Bookmarks UI
+        const updateBookmarkIcon = (icon) => {
+            if (!icon) return;
+            icon.style.fontVariationSettings = `'FILL' ${isBookmarked ? 1 : 0}, 'wght' 300`;
+            if (isBookmarked) icon.classList.add("text-primary");
+            else icon.classList.remove("text-primary");
+        };
+        updateBookmarkIcon(bookmarkIconDesktop);
+        updateBookmarkIcon(bookmarkIconMobile);
+    }
+
+    async function toggleLike() {
+        if (!user) {
+            alert("Debes iniciar sesión para dar like.");
+            return;
+        }
+
+        isLiked = !isLiked;
+        likeCount = isLiked ? likeCount + 1 : likeCount - 1;
+        updateUI();
+
+        if (isLiked) {
+            await supabase
+                .from("likes")
+                .insert({ post_slug: slug, user_id: user.id });
+        } else {
+            await supabase
+                .from("likes")
+                .delete()
+                .eq("post_slug", slug)
+                .eq("user_id", user.id);
+        }
+    }
+
+    async function toggleBookmark() {
+        if (!user) {
+            alert("Debes iniciar sesión para guardar.");
+            return;
+        }
+
+        isBookmarked = !isBookmarked;
+        updateUI();
+
+        if (isBookmarked) {
+            await supabase
+                .from("bookmarks")
+                .insert({ post_slug: slug, user_id: user.id });
+        } else {
+            await supabase
+                .from("bookmarks")
+                .delete()
+                .eq("post_slug", slug)
+                .eq("user_id", user.id);
+        }
+    }
+
+    likeBtnDesktop?.addEventListener("click", toggleLike);
+    likeBtnMobile?.addEventListener("click", toggleLike);
+
+    bookmarkBtnDesktop?.addEventListener("click", toggleBookmark);
+    bookmarkBtnMobile?.addEventListener("click", toggleBookmark);
+
+    init();
+</script>

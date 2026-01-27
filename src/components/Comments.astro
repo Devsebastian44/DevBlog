@@ -1,0 +1,193 @@
+---
+interface Props {
+    slug: string;
+}
+
+const { slug } = Astro.props;
+---
+
+<section
+    id="comments-section"
+    class="py-10 border-t border-slate-200 dark:border-[#224249] mt-10"
+>
+    <h3
+        class="text-2xl font-bold text-slate-900 dark:text-white mb-8 flex items-center gap-2"
+    >
+        Comentarios <span
+            id="total-comments"
+            class="text-sm font-normal text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full"
+            >0</span
+        >
+    </h3>
+
+    <!-- Comment Form -->
+    <div id="comment-form-container" class="mb-10 hidden">
+        <form id="comment-form" class="space-y-4">
+            <textarea
+                id="comment-input"
+                class="w-full bg-slate-50 dark:bg-[#162a2f] text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-200 dark:border-transparent focus:border-primary/50 focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:text-slate-400 min-h-[120px] resize-y"
+                placeholder="Escribe un comentario..."
+                required></textarea>
+            <div class="flex justify-end">
+                <button
+                    type="submit"
+                    class="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-6 rounded-lg shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all text-sm"
+                >
+                    Publicar Comentario
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div id="login-to-comment" class="mb-10 hidden">
+        <div
+            class="bg-slate-50 dark:bg-[#162a2f] p-6 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-center"
+        >
+            <p class="text-slate-500 mb-4">
+                Inicia sesión para dejar un comentario.
+            </p>
+            <a
+                href="/login"
+                class="inline-block bg-white dark:bg-transparent border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg text-sm font-medium hover:border-primary hover:text-primary transition-colors"
+            >
+                Iniciar Sesión
+            </a>
+        </div>
+    </div>
+
+    <!-- Comments List -->
+    <div id="comments-list" class="space-y-6">
+        <!-- Comments will be injected here -->
+        <div class="text-center py-10 text-slate-500 animate-pulse">
+            Cargando comentarios...
+        </div>
+    </div>
+</section>
+
+<script define:vars={{ slug }}>
+    import { supabase } from "../lib/supabase";
+
+    const commentsList = document.getElementById("comments-list");
+    const commentFormContainer = document.getElementById(
+        "comment-form-container",
+    );
+    const loginToComment = document.getElementById("login-to-comment");
+    const commentForm = document.getElementById("comment-form");
+    const commentInput = document.getElementById("comment-input");
+    const totalComments = document.getElementById("total-comments");
+
+    let user = null;
+
+    async function init() {
+        // Check Auth
+        const {
+            data: { session },
+        } = await supabase.auth.getSession();
+        user = session?.user || null;
+
+        if (user) {
+            commentFormContainer.classList.remove("hidden");
+        } else {
+            loginToComment.classList.remove("hidden");
+        }
+
+        fetchComments();
+    }
+
+    async function fetchComments() {
+        const { data, error, count } = await supabase
+            .from("comments")
+            .select("*", { count: "exact" })
+            .eq("post_slug", slug)
+            .order("created_at", { ascending: false });
+
+        if (error) {
+            console.error("Error fetching comments:", error);
+            commentsList.innerHTML =
+                '<p class="text-red-500 text-center">Error al cargar comentarios.</p>';
+            return;
+        }
+
+        if (totalComments) totalComments.textContent = count || 0;
+
+        renderComments(data);
+    }
+
+    function renderComments(comments) {
+        if (!comments || comments.length === 0) {
+            commentsList.innerHTML = `
+        <div class="text-center py-8 text-slate-500 italic">
+            Aún no hay comentarios. ¡Sé el primero!
+        </div>
+      `;
+            return;
+        }
+
+        commentsList.innerHTML = comments
+            .map(
+                (comment) => `
+      <div class="group">
+        <div class="flex gap-4">
+           <div class="flex-shrink-0">
+             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center text-primary font-bold text-sm">
+                ${comment.user_id.slice(0, 2).toUpperCase()}
+             </div>
+           </div>
+           <div class="flex-1">
+             <div class="bg-slate-50 dark:bg-[#162a2f] p-4 rounded-xl rounded-tl-none">
+                <p class="text-slate-800 dark:text-slate-200 text-sm whitespace-pre-wrap">${escapeHtml(comment.content)}</p>
+             </div>
+             <div class="mt-2 flex items-center gap-3 text-xs text-slate-500">
+                <span>${new Date(comment.created_at).toLocaleDateString()}</span>
+             </div>
+           </div>
+        </div>
+      </div>
+    `,
+            )
+            .join("");
+    }
+
+    function escapeHtml(text) {
+        const map = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;",
+        };
+        return text.replace(/[&<>"']/g, function (m) {
+            return map[m];
+        });
+    }
+
+    commentForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!user) return;
+
+        const content = commentInput.value.trim();
+        if (!content) return;
+
+        const submitBtn = commentForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Publicando...";
+
+        const { error } = await supabase.from("comments").insert({
+            post_slug: slug,
+            user_id: user.id,
+            content: content,
+        });
+
+        if (error) {
+            alert("Error al publicar comentario: " + error.message);
+        } else {
+            commentInput.value = "";
+            fetchComments();
+        }
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Publicar Comentario";
+    });
+
+    init();
+</script>

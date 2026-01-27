@@ -16,6 +16,7 @@ const searchablePosts = allPosts.map((post) => ({
 >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
             <a
                 href="/"
                 class="flex-shrink-0 flex items-center space-x-3 cursor-pointer group"
@@ -42,7 +43,8 @@ const searchablePosts = allPosts.map((post) => ({
                 >
             </a>
 
-            <nav class="hidden md:flex space-x-8">
+            <!-- Nav -->
+            <nav class="hidden lg:flex space-x-8">
                 <a
                     class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
                     href="/archive?topic=Programming">Programming</a
@@ -61,19 +63,37 @@ const searchablePosts = allPosts.map((post) => ({
                 >
             </nav>
 
+            <!-- Search -->
+            <button
+                id="search-btn"
+                class="p-2 text-slate-500 hover:text-primary transition-colors hover:bg-primary/10 rounded-full"
+                aria-label="Search"
+            >
+                <span class="material-icons text-[20px]">search</span>
+            </button>
+
+            <!-- Auth + Menu -->
             <div class="flex items-center space-x-4">
-                <button
-                    id="search-btn"
-                    class="p-2 text-slate-500 hover:text-primary transition-colors hover:bg-primary/10 rounded-full"
-                    aria-label="Search"
-                >
-                    <span class="material-icons text-[20px]">search</span>
-                </button>
+                <!-- Auth Buttons (Desktop) -->
+                <div class="hidden lg:flex items-center space-x-3">
+                    <a
+                        href="/login"
+                        class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
+                    >
+                        Iniciar Sesión
+                    </a>
+                    <a
+                        href="/register"
+                        class="px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary-dark rounded-lg transition-colors shadow-lg shadow-primary/20"
+                    >
+                        Registrarse
+                    </a>
+                </div>
 
                 <!-- Mobile Menu Button -->
                 <button
                     id="mobile-menu-btn"
-                    class="md:hidden p-2 text-slate-500 hover:text-primary transition-colors hover:bg-primary/10 rounded-lg group"
+                    class="lg:hidden p-2 text-slate-500 hover:text-primary transition-colors hover:bg-primary/10 rounded-lg group"
                     aria-label="Toggle Menu"
                 >
                     <div class="w-6 h-5 relative flex flex-col justify-between">
@@ -97,7 +117,7 @@ const searchablePosts = allPosts.map((post) => ({
 </header>
 
 <!-- Mobile Menu Overlay -->
-<div id="mobile-menu" class="fixed inset-0 z-40 hidden md:hidden">
+<div id="mobile-menu" class="fixed inset-0 z-40 hidden lg:hidden">
     <!-- Backdrop -->
     <div
         id="mobile-menu-backdrop"
@@ -127,6 +147,21 @@ const searchablePosts = allPosts.map((post) => ({
                 class="text-slate-300 hover:text-primary text-lg font-bold py-2 border-b border-white/5"
                 href="/archive?topic=AI %26 ML">AI & ML</a
             >
+
+            <div class="pt-4 flex flex-col space-y-3">
+                <a
+                    href="/login"
+                    class="w-full text-center py-2 rounded-lg border border-slate-700 text-slate-300 font-bold hover:border-primary hover:text-primary transition-colors"
+                >
+                    Iniciar Sesión
+                </a>
+                <a
+                    href="/register"
+                    class="w-full text-center py-2 rounded-lg bg-primary text-white font-bold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
+                >
+                    Registrarse
+                </a>
+            </div>
         </nav>
 
         <div class="mt-12 flex flex-col gap-4">

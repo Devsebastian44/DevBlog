@@ -27,24 +27,28 @@ DevBlog follows a modern decoupled architecture, combining static content with d
 
 ```mermaid
 graph TD
-    subgraph "Frontend (Astro 5.0)"
+    subgraph "Frontend Layer (Astro 5.0)"
         UI[User Interface]
-        Static[Static Content / Markdown]
-        Logic[Browser Script / Interactivity]
+        Server[Astro Server-Side]
     end
 
-    subgraph "Backend-as-a-Service (Supabase)"
-        Auth[Supabase Auth]
+    subgraph "Data Access Layer"
+        Prisma[Prisma Client / ORM]
+    end
+
+    subgraph "Cloud Backend (Supabase)"
+        Pooler[PgBouncer Pooler :6543]
         DB[(PostgreSQL Database)]
-        RPC[[Database Functions / RPC]]
+        Auth[Supabase Auth]
     end
 
-    UI --> Logic
-    Static --> UI
-    Logic <--> Auth
-    Logic <--> DB
-    Logic <--> RPC
-    Auth --> DB
+    UI <--> Server
+    Server --> Prisma
+    Prisma -- "Standard Queries" --> Pooler
+    Prisma -- "Migrations (Direct)" --> DB
+    Pooler --> DB
+    UI <--> Auth
+    Auth -.-> DB
 ```
 
 ### ⚙️ How it works:

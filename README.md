@@ -19,6 +19,39 @@ DevBlog is a high-performance, premium tech blog built for deep dives into softw
 - **[Vite](https://vitejs.dev/)**: Next-generation frontend tooling for a fast development experience.
 - **[TypeScript](https://www.typescriptlang.org/)**: Static type checking for robust and maintainable code.
 
+## 🏗️ System Architecture
+
+DevBlog follows a modern decoupled architecture, combining static content with dynamic real-time features.
+
+### 🧩 Architecture Diagram
+
+```mermaid
+graph TD
+    subgraph "Frontend (Astro 5.0)"
+        UI[User Interface]
+        Static[Static Content / Markdown]
+        Logic[Browser Script / Interactivity]
+    end
+
+    subgraph "Backend-as-a-Service (Supabase)"
+        Auth[Supabase Auth]
+        DB[(PostgreSQL Database)]
+        RPC[[Database Functions / RPC]]
+    end
+
+    UI --> Logic
+    Static --> UI
+    Logic <--> Auth
+    Logic <--> DB
+    Logic <--> RPC
+    Auth --> DB
+```
+
+### ⚙️ How it works:
+- **Static First**: Blog posts are pre-rendered during build time for maximum speed and SEO.
+- **Dynamic Layers**: Interactivity (Likes, Comments, Bookmarks) is handled via client-side scripts connecting directly to Supabase.
+- **Secure Auth**: User management and the "Danger Zone" use Supabase Auth and secure PostgreSQL functions.
+
 ## 📂 Project Structure
 
 The project follows a modular and organized structure:
@@ -67,6 +100,17 @@ The project follows a modular and organized structure:
    ```bash
    npm run dev
    ```
+
+## 🚀 Deployment (Vercel)
+
+1.  **Environment Variables**: In your Vercel project settings, add the following:
+    - `PUBLIC_SUPABASE_URL`: Your Supabase Project URL.
+    - `PUBLIC_SUPABASE_ANON_KEY`: Your Supabase Anonymous API Key.
+2.  **Redeploy**: Ensure you redeploy the project after adding these variables to apply the changes.
+
+## 🤝 Contributing
+
+Developed with ❤️ for the Tech Community.
 
 ---
 

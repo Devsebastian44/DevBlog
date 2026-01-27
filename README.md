@@ -26,35 +26,58 @@ DevBlog follows a modern decoupled architecture, combining static content with d
 ### 🧩 Architecture Diagram
 
 ```mermaid
-graph TD
-    subgraph "Frontend Layer (Astro 5.0)"
-        UI[User Interface]
-        Server[Astro Server-Side]
+graph TB
+    subgraph "🌐 Client Layer"
+        UI["Astro UI (SSR/Hybrid)"]
+        SDK["Supabase JS SDK"]
+        LS["Local Storage (Guest State)"]
     end
 
-    subgraph "Data Access Layer"
-        Prisma[Prisma Client / ORM]
+    subgraph "⚡ Edge / Server Layer"
+        Astro["Astro Server Engine"]
+        API["Edge Functions / RPC"]
     end
 
-    subgraph "Cloud Backend (Supabase)"
-        Pooler[PgBouncer Pooler :6543]
-        DB[(PostgreSQL Database)]
-        Auth[Supabase Auth]
+    subgraph "🔐 Security & Logic"
+        Auth["Supabase Auth"]
+        RLS["Row Level Security (RLS)"]
     end
 
-    UI <--> Server
-    Server --> Prisma
-    Prisma -- "Standard Queries" --> Pooler
-    Prisma -- "Migrations (Direct)" --> DB
-    Pooler --> DB
-    UI <--> Auth
-    Auth -.-> DB
+    subgraph "💾 Persistence Layer"
+        DB[("PostgreSQL Database")]
+        Prisma["Prisma ORM (Migrations)"]
+    end
+
+    %% Interactions
+    UI <--> SDK
+    SDK <--> Auth
+    SDK <--> RLS
+    RLS <--> DB
+    UI <--> LS
+    
+    Astro -->|SSG| UI
+    Astro <--> API
+    API <--> DB
+    
+    Prisma -.->|Schema Sync| DB
+
+    %% Styling
+    classDef client fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef server fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+    classDef security fill:#ede7f6,stroke:#311b92,stroke-width:2px;
+    classDef storage fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
+
+    class UI,SDK,LS client;
+    class Astro,API server;
+    class Auth,RLS security;
+    class DB,Prisma storage;
 ```
 
 ### ⚙️ How it works:
 - **Static First**: Blog posts are pre-rendered during build time for maximum speed and SEO.
 - **Dynamic Layers**: Interactivity (Likes, Comments, Bookmarks) is handled via client-side scripts connecting directly to Supabase.
 - **Secure Auth**: User management and the "Danger Zone" use Supabase Auth and secure PostgreSQL functions.
+- **Data Integrity**: Prisma handles the schema definitions and migrations, while Supabase RLS ensures only authorized users can modify their data.
 
 ## 📂 Project Structure
 

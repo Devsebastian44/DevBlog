@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 
-const title = "Registrarse | DevBlog";
+const title = "Sign Up | DevBlog";
 ---
 
 <Layout title={title}>
@@ -30,10 +30,10 @@ const title = "Registrarse | DevBlog";
                     <h1
                         class="font-display font-bold text-3xl text-slate-900 dark:text-white mb-2"
                     >
-                        Crear Cuenta
+                        Create Account
                     </h1>
                     <p class="text-slate-500 text-sm">
-                        Únete a nuestra comunidad de desarrolladores
+                        Join our developer community
                     </p>
                 </div>
 
@@ -42,7 +42,7 @@ const title = "Registrarse | DevBlog";
                         <label
                             for="name"
                             class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2"
-                            >Nombre Completo</label
+                            >Full Name</label
                         >
                         <input
                             type="text"
@@ -64,7 +64,7 @@ const title = "Registrarse | DevBlog";
                             id="email"
                             required
                             class="w-full bg-slate-50 dark:bg-[#162a2f] text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-200 dark:border-transparent focus:border-primary/50 focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:text-slate-400"
-                            placeholder="tu@email.com"
+                            placeholder="your@email.com"
                         />
                     </div>
 
@@ -72,7 +72,7 @@ const title = "Registrarse | DevBlog";
                         <label
                             for="password"
                             class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2"
-                            >Contraseña</label
+                            >Password</label
                         >
                         <input
                             type="password"
@@ -87,7 +87,7 @@ const title = "Registrarse | DevBlog";
                         <label
                             for="confirm-password"
                             class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2"
-                            >Confirmar Contraseña</label
+                            >Confirm Password</label
                         >
                         <input
                             type="password"
@@ -106,14 +106,14 @@ const title = "Registrarse | DevBlog";
                             required
                         />
                         <label for="terms" class="text-xs text-slate-500">
-                            Acepto los <a
+                            I agree to the <a
                                 href="#"
                                 class="text-primary hover:underline"
-                                >Términos de Servicio</a
-                            > y la <a
+                                >Terms of Service</a
+                            > and <a
                                 href="#"
                                 class="text-primary hover:underline"
-                                >Política de Privacidad</a
+                                >Privacy Policy</a
                             >.
                         </label>
                     </div>
@@ -134,7 +134,7 @@ const title = "Registrarse | DevBlog";
                         id="submit-btn"
                         class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 rounded-xl shadow-lg shadow-primary/25 hover:shadow-primary/40 transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        Crear Cuenta
+                        Sign Up
                     </button>
 
                     <div class="relative py-2">
@@ -149,7 +149,7 @@ const title = "Registrarse | DevBlog";
                         >
                             <span
                                 class="bg-white dark:bg-[#0b1618] px-2 text-slate-500 font-medium"
-                                >O regístrate con</span
+                                >Or join with</span
                             >
                         </div>
                     </div>
@@ -178,11 +178,11 @@ const title = "Registrarse | DevBlog";
 
                 <div class="mt-8 text-center">
                     <p class="text-sm text-slate-500">
-                        ¿Ya tienes una cuenta?
+                        Already have an account?
                         <a
                             href="/login"
                             class="text-primary hover:text-primary-dark font-bold hover:underline transition-colors"
-                            >Inicia Sesión</a
+                            >Login</a
                         >
                     </p>
                 </div>
@@ -230,7 +230,7 @@ const title = "Registrarse | DevBlog";
         // Validate passwords
         if (password !== confirmPassword) {
             if (errorMessage) {
-                errorMessage.textContent = "Las contraseñas no coinciden.";
+                errorMessage.textContent = "Passwords do not match.";
                 errorMessage.classList.remove("hidden");
             }
             return;
@@ -239,7 +239,7 @@ const title = "Registrarse | DevBlog";
         if (password.length < 6) {
             if (errorMessage) {
                 errorMessage.textContent =
-                    "La contraseña debe tener al menos 6 caracteres.";
+                    "Password must be at least 6 characters long.";
                 errorMessage.classList.remove("hidden");
             }
             return;
@@ -248,7 +248,7 @@ const title = "Registrarse | DevBlog";
         // Disable button
         if (submitBtn) {
             submitBtn.disabled = true;
-            submitBtn.textContent = "Registrando...";
+            submitBtn.textContent = "Registering...";
         }
 
         try {
@@ -269,20 +269,19 @@ const title = "Registrarse | DevBlog";
             // Success
             if (successMessage) {
                 successMessage.textContent =
-                    "¡Registro exitoso! Por favor verifica tu email para confirmar tu cuenta.";
+                    "Registration successful! Please check your email to confirm your account.";
                 successMessage.classList.remove("hidden");
             }
             form.reset();
         } catch (error: any) {
             if (errorMessage) {
-                errorMessage.textContent =
-                    error.message || "Error al registrarse";
+                errorMessage.textContent = error.message || "Error registering";
                 errorMessage.classList.remove("hidden");
             }
         } finally {
             if (submitBtn) {
                 submitBtn.disabled = false;
-                submitBtn.textContent = "Crear Cuenta";
+                submitBtn.textContent = "Sign Up";
             }
         }
     });

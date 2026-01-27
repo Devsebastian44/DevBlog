@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 
-const title = "Iniciar Sesión | DevBlog";
+const title = "Login | DevBlog";
 ---
 
 <Layout title={title}>
@@ -30,10 +30,10 @@ const title = "Iniciar Sesión | DevBlog";
                     <h1
                         class="font-display font-bold text-3xl text-slate-900 dark:text-white mb-2"
                     >
-                        Bienvenido
+                        Welcome Back
                     </h1>
                     <p class="text-slate-500 text-sm">
-                        Ingresa a tu cuenta para continuar
+                        Please enter your details to login
                     </p>
                 </div>
 
@@ -49,7 +49,7 @@ const title = "Iniciar Sesión | DevBlog";
                             id="email"
                             required
                             class="w-full bg-slate-50 dark:bg-[#162a2f] text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-200 dark:border-transparent focus:border-primary/50 focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:text-slate-400"
-                            placeholder="tu@email.com"
+                            placeholder="your@email.com"
                         />
                     </div>
 
@@ -58,12 +58,12 @@ const title = "Iniciar Sesión | DevBlog";
                             <label
                                 for="password"
                                 class="block text-xs font-bold text-slate-500 uppercase tracking-widest"
-                                >Contraseña</label
+                                >Password</label
                             >
                             <a
                                 href="#"
                                 class="text-xs text-primary hover:text-primary-dark font-medium transition-colors"
-                                >¿Olvidaste tu contraseña?</a
+                                >Forgot password?</a
                             >
                         </div>
                         <input
@@ -86,7 +86,7 @@ const title = "Iniciar Sesión | DevBlog";
                         id="submit-btn"
                         class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 rounded-xl shadow-lg shadow-primary/25 hover:shadow-primary/40 transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        Iniciar Sesión
+                        Login
                     </button>
 
                     <div class="relative py-2">
@@ -101,7 +101,7 @@ const title = "Iniciar Sesión | DevBlog";
                         >
                             <span
                                 class="bg-white dark:bg-[#0b1618] px-2 text-slate-500 font-medium"
-                                >O continúa con</span
+                                >Or continue with</span
                             >
                         </div>
                     </div>
@@ -130,11 +130,11 @@ const title = "Iniciar Sesión | DevBlog";
 
                 <div class="mt-8 text-center">
                     <p class="text-sm text-slate-500">
-                        ¿No tienes una cuenta?
+                        Don't have an account?
                         <a
                             href="/register"
                             class="text-primary hover:text-primary-dark font-bold hover:underline transition-colors"
-                            >Regístrate</a
+                            >Sign Up</a
                         >
                     </p>
                 </div>
@@ -171,7 +171,7 @@ const title = "Iniciar Sesión | DevBlog";
         // Disable button
         if (submitBtn) {
             submitBtn.disabled = true;
-            submitBtn.textContent = "Iniciando...";
+            submitBtn.textContent = "Logging in...";
         }
 
         try {
@@ -188,14 +188,13 @@ const title = "Iniciar Sesión | DevBlog";
             window.location.href = "/";
         } catch (error: any) {
             if (errorMessage) {
-                errorMessage.textContent =
-                    error.message || "Error al iniciar sesión";
+                errorMessage.textContent = error.message || "Error logging in";
                 errorMessage.classList.remove("hidden");
             }
         } finally {
             if (submitBtn) {
                 submitBtn.disabled = false;
-                submitBtn.textContent = "Iniciar Sesión";
+                submitBtn.textContent = "Login";
             }
         }
     });

@@ -7,16 +7,16 @@ const { slug } = Astro.props;
 ---
 
 <aside
-    class="hidden lg:block lg:col-span-1 sticky top-24 self-start flex flex-col items-center gap-6"
+    class="hidden lg:block lg:col-span-1 sticky top-24 self-start flex flex-col items-center gap-20"
 >
     <!-- Like Button -->
     <button
         id="like-btn-desktop"
-        class="group flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors"
+        class="group flex flex-col items-center gap-0 text-slate-400 hover:text-primary transition-colors"
         data-slug={slug}
     >
         <div
-            class="p-2 rounded-full group-hover:bg-primary/10 transition-colors relative"
+            class="p-1.5 rounded-full group-hover:bg-primary/10 transition-colors relative"
         >
             <span
                 class="material-symbols-outlined transition-all duration-300"
@@ -25,16 +25,16 @@ const { slug } = Astro.props;
                 >thumb_up</span
             >
         </div>
-        <span class="text-xs font-medium" id="like-count-desktop">--</span>
+        <span class="text-xs font-bold -mt-2" id="like-count-desktop">--</span>
     </button>
 
     <!-- Comment Button -->
     <button
         id="comment-btn-desktop"
-        class="group flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors"
+        class="group flex flex-col items-center gap-0 text-slate-400 hover:text-primary transition-colors"
     >
         <div
-            class="p-2 rounded-full group-hover:bg-primary/10 transition-colors"
+            class="p-1.5 rounded-full group-hover:bg-primary/10 transition-colors"
         >
             <span
                 class="material-symbols-outlined"
@@ -42,16 +42,18 @@ const { slug } = Astro.props;
                 >chat_bubble</span
             >
         </div>
-        <span class="text-xs font-medium" id="comment-count-desktop">--</span>
+        <span class="text-xs font-bold -mt-2" id="comment-count-desktop"
+            >--</span
+        >
     </button>
 
     <!-- Bookmark Button -->
     <button
         id="bookmark-btn-desktop"
-        class="group flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors"
+        class="group flex flex-col items-center gap-0 text-slate-400 hover:text-primary transition-colors"
     >
         <div
-            class="p-2 rounded-full group-hover:bg-primary/10 transition-colors"
+            class="p-1.5 rounded-full group-hover:bg-primary/10 transition-colors"
         >
             <span
                 class="material-symbols-outlined transition-all duration-300"
@@ -60,7 +62,9 @@ const { slug } = Astro.props;
                 >bookmark</span
             >
         </div>
-        <span class="text-xs font-medium sm:hidden">Save</span>
+        <span class="text-xs font-bold -mt-2" id="bookmark-count-desktop"
+            >--</span
+        >
     </button>
 
     <div class="w-8 h-[1px] bg-slate-200 dark:bg-slate-700 my-2"></div>
@@ -68,7 +72,7 @@ const { slug } = Astro.props;
     <!-- Share Button -->
     <button
         class="group flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors"
-        onclick="navigator.clipboard.writeText(window.location.href); alert('Link copiado!')"
+        onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!')"
     >
         <div
             class="p-2 rounded-full group-hover:bg-primary/10 transition-colors"
@@ -89,7 +93,7 @@ const { slug } = Astro.props;
     <div class="flex items-center justify-around">
         <button
             id="like-btn-mobile"
-            class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary active:text-primary"
+            class="flex flex-col items-center gap-0 text-slate-400 hover:text-primary active:text-primary"
             data-slug={slug}
         >
             <span
@@ -104,7 +108,7 @@ const { slug } = Astro.props;
         </button>
         <button
             id="comment-btn-mobile"
-            class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary active:text-primary"
+            class="flex flex-col items-center gap-0 text-slate-400 hover:text-primary active:text-primary"
         >
             <span
                 class="material-symbols-outlined"
@@ -117,7 +121,7 @@ const { slug } = Astro.props;
         </button>
         <button
             id="bookmark-btn-mobile"
-            class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary active:text-primary"
+            class="flex flex-col items-center gap-0 text-slate-400 hover:text-primary active:text-primary"
         >
             <span
                 class="material-symbols-outlined"
@@ -125,11 +129,13 @@ const { slug } = Astro.props;
                 style="font-variation-settings: 'FILL' 0, 'wght' 300;"
                 >bookmark</span
             >
-            <span class="text-[10px] font-medium">Save</span>
+            <span class="text-[10px] font-medium" id="bookmark-count-mobile"
+                >--</span
+            >
         </button>
         <button
             class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary active:text-primary"
-            onclick="navigator.clipboard.writeText(window.location.href); alert('Link copiado!')"
+            onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied!')"
         >
             <span class="material-symbols-outlined">share</span>
             <span class="text-[10px] font-medium">Share</span>
@@ -165,6 +171,12 @@ const { slug } = Astro.props;
     );
     const bookmarkBtnMobile = document.getElementById("bookmark-btn-mobile");
     const bookmarkIconMobile = document.getElementById("bookmark-icon-mobile");
+    const bookmarkCountDesktop = document.getElementById(
+        "bookmark-count-desktop",
+    );
+    const bookmarkCountMobile = document.getElementById(
+        "bookmark-count-mobile",
+    );
 
     // Scroll to comments
     const scrollToComments = () => {
@@ -179,9 +191,22 @@ const { slug } = Astro.props;
     // State
     let likeCount = 0;
     let commentCount = 0;
+    let bookmarkCount = 0;
     let isLiked = false;
     let isBookmarked = false;
-    let user = null;
+    let user: any = null;
+
+    // Guest ID for anonymous tracking
+    const GUEST_ID = "devblog_guest_id";
+    let guestId = localStorage.getItem(GUEST_ID);
+    if (!guestId) {
+        guestId = Math.random().toString(36).substring(2, 11);
+        localStorage.setItem(GUEST_ID, guestId);
+    }
+
+    // Local Storage Keys
+    const LIKED_KEY = `liked_${slug}`;
+    const BOOKMARKED_KEY = `bookmarked_${slug}`;
 
     async function init() {
         if (!slug) return;
@@ -192,10 +217,17 @@ const { slug } = Astro.props;
         } = await supabase.auth.getSession();
         user = session?.user || null;
 
+        // Check local state for guests
+        if (!user) {
+            isLiked = localStorage.getItem(LIKED_KEY) === "true";
+            isBookmarked = localStorage.getItem(BOOKMARKED_KEY) === "true";
+        }
+
         await Promise.all([
             fetchLikes(),
             fetchCommentsCount(),
             fetchBookmarkStatus(),
+            fetchBookmarksCount(),
         ]);
 
         updateUI();
@@ -235,20 +267,31 @@ const { slug } = Astro.props;
     }
 
     async function fetchBookmarkStatus() {
-        if (!user) return;
+        if (user) {
+            const { data } = await supabase
+                .from("bookmarks")
+                .select("*")
+                .eq("post_slug", slug)
+                .eq("user_id", user.id)
+                .single();
 
-        const { data } = await supabase
+            if (data) isBookmarked = true;
+        }
+    }
+
+    async function fetchBookmarksCount() {
+        const { count, error } = await supabase
             .from("bookmarks")
-            .select("*")
-            .eq("post_slug", slug)
-            .eq("user_id", user.id)
-            .single();
+            .select("*", { count: "exact", head: true })
+            .eq("post_slug", slug);
 
-        if (data) isBookmarked = true;
+        if (!error && count !== null) {
+            bookmarkCount = count;
+        }
     }
 
     function updateUI() {
-        const formatCount = (n) =>
+        const formatCount = (n: number) =>
             n > 1000 ? `${(n / 1000).toFixed(1)}k` : n.toString();
 
         // Likes UI
@@ -256,7 +299,7 @@ const { slug } = Astro.props;
         if (likeCountDesktop) likeCountDesktop.textContent = likeCountText;
         if (likeCountMobile) likeCountMobile.textContent = likeCountText;
 
-        const updateLikeIcon = (icon) => {
+        const updateLikeIcon = (icon: HTMLElement | null) => {
             if (!icon) return;
             icon.style.fontVariationSettings = `'FILL' ${isLiked ? 1 : 0}, 'wght' 300`;
             if (isLiked) icon.classList.add("text-primary");
@@ -273,7 +316,7 @@ const { slug } = Astro.props;
             commentCountMobile.textContent = commentCountText;
 
         // Bookmarks UI
-        const updateBookmarkIcon = (icon) => {
+        const updateBookmarkIcon = (icon: HTMLElement | null) => {
             if (!icon) return;
             icon.style.fontVariationSettings = `'FILL' ${isBookmarked ? 1 : 0}, 'wght' 300`;
             if (isBookmarked) icon.classList.add("text-primary");
@@ -281,50 +324,86 @@ const { slug } = Astro.props;
         };
         updateBookmarkIcon(bookmarkIconDesktop);
         updateBookmarkIcon(bookmarkIconMobile);
+
+        const bookmarkCountText = formatCount(bookmarkCount);
+        if (bookmarkCountDesktop)
+            bookmarkCountDesktop.textContent = bookmarkCountText;
+        if (bookmarkCountMobile)
+            bookmarkCountMobile.textContent = bookmarkCountText;
     }
 
     async function toggleLike() {
-        if (!user) {
-            alert("Debes iniciar sesión para dar like.");
-            return;
-        }
-
+        const prevStatus = isLiked;
         isLiked = !isLiked;
-        likeCount = isLiked ? likeCount + 1 : likeCount - 1;
+        likeCount = isLiked ? likeCount + 1 : Math.max(0, likeCount - 1);
         updateUI();
 
-        if (isLiked) {
-            await supabase
-                .from("likes")
-                .insert({ post_slug: slug, user_id: user.id });
-        } else {
-            await supabase
-                .from("likes")
-                .delete()
-                .eq("post_slug", slug)
-                .eq("user_id", user.id);
+        if (!user) {
+            localStorage.setItem(LIKED_KEY, isLiked.toString());
+        }
+
+        try {
+            if (isLiked) {
+                await supabase.from("likes").insert({
+                    post_slug: slug,
+                    user_id: user?.id || null,
+                });
+            } else {
+                if (user) {
+                    await supabase
+                        .from("likes")
+                        .delete()
+                        .eq("post_slug", slug)
+                        .eq("user_id", user.id);
+                } else {
+                    // For guests, we can't easily delete their specific like without a session
+                    // So we just rely on local state to prevent duplicate counts from the same guest
+                    // But for now, simple insert is fine for count tracking.
+                }
+            }
+        } catch (err) {
+            console.error("Error toggling like", err);
+            // Revert on error
+            isLiked = prevStatus;
+            likeCount = isLiked ? likeCount + 1 : Math.max(0, likeCount - 1);
+            updateUI();
         }
     }
 
     async function toggleBookmark() {
-        if (!user) {
-            alert("Debes iniciar sesión para guardar.");
-            return;
-        }
-
+        const prevStatus = isBookmarked;
         isBookmarked = !isBookmarked;
+        bookmarkCount = isBookmarked
+            ? bookmarkCount + 1
+            : Math.max(0, bookmarkCount - 1);
         updateUI();
 
-        if (isBookmarked) {
-            await supabase
-                .from("bookmarks")
-                .insert({ post_slug: slug, user_id: user.id });
-        } else {
-            await supabase
-                .from("bookmarks")
-                .delete()
-                .eq("post_slug", slug)
-                .eq("user_id", user.id);
+        if (!user) {
+            localStorage.setItem(BOOKMARKED_KEY, isBookmarked.toString());
+        }
+
+        try {
+            if (isBookmarked) {
+                await supabase.from("bookmarks").insert({
+                    post_slug: slug,
+                    user_id: user?.id || null,
+                });
+            } else {
+                if (user) {
+                    await supabase
+                        .from("bookmarks")
+                        .delete()
+                        .eq("post_slug", slug)
+                        .eq("user_id", user.id);
+                }
+            }
+        } catch (err) {
+            console.error("Error toggling bookmark", err);
+            isBookmarked = prevStatus;
+            bookmarkCount = isBookmarked
+                ? bookmarkCount + 1
+                : Math.max(0, bookmarkCount - 1);
+            updateUI();
         }
     }
 

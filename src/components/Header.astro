@@ -66,10 +66,23 @@ const searchablePosts = allPosts.map((post) => ({
             <!-- Search -->
             <button
                 id="search-btn"
-                class="p-2 text-slate-500 hover:text-primary transition-colors hover:bg-primary/10 rounded-full"
+                class="p-2 text-slate-500 hover:text-primary transition-colors hover:bg-primary/10 rounded-full flex items-center justify-center"
                 aria-label="Search"
             >
-                <span class="material-icons text-[20px]">search</span>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                </svg>
             </button>
 
             <!-- Auth + Menu -->
@@ -108,12 +121,24 @@ const searchablePosts = allPosts.map((post) => ({
                                 src=""
                                 alt="Profile"
                                 class="hidden w-full h-full object-cover"
+                                loading="lazy"
+                                decoding="async"
                             />
                         </div>
-                        <span
-                            class="material-icons text-slate-400 group-hover:text-primary transition-colors"
-                            >expand_more</span
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="text-slate-400 group-hover:text-primary transition-colors"
                         >
+                            <path d="m6 9 6 6 6-6"></path>
+                        </svg>
                     </button>
 
                     <!-- User Dropdown -->
@@ -140,9 +165,22 @@ const searchablePosts = allPosts.map((post) => ({
                             href="/settings"
                             class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#162a2f] hover:text-primary transition-colors"
                         >
-                            <span class="material-icons text-[18px]"
-                                >settings</span
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
                             >
+                                <path
+                                    d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+                                ></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
                             Account Settings
                         </a>
                         <div
@@ -153,18 +191,43 @@ const searchablePosts = allPosts.map((post) => ({
                             href="/my-likes"
                             class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#162a2f] hover:text-primary transition-colors"
                         >
-                            <span class="material-icons text-[18px]"
-                                >thumb_up</span
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
                             >
+                                <path d="M7 10v12"></path>
+                                <path
+                                    d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"
+                                ></path>
+                            </svg>
                             My Likes
                         </a>
                         <a
                             href="/my-favorites"
                             class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#162a2f] hover:text-primary transition-colors"
                         >
-                            <span class="material-icons text-[18px]"
-                                >bookmark</span
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
                             >
+                                <path
+                                    d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"
+                                ></path>
+                            </svg>
                             My Favorites
                         </a>
                         <div
@@ -175,9 +238,23 @@ const searchablePosts = allPosts.map((post) => ({
                             id="logout-btn"
                             class="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
                         >
-                            <span class="material-icons text-[18px]"
-                                >logout</span
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
                             >
+                                <path
+                                    d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+                                ></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" x2="9" y1="12" y2="12"></line>
+                            </svg>
                             Logout
                         </button>
                     </div>
@@ -264,28 +341,87 @@ const searchablePosts = allPosts.map((post) => ({
                     href="/settings"
                     class="w-full flex items-center justify-center gap-2 py-2 rounded-lg border border-slate-700 text-slate-300 font-bold hover:border-primary hover:text-primary transition-colors"
                 >
-                    <span class="material-icons text-[18px]">settings</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+                        ></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
                     Account Settings
                 </a>
                 <a
                     href="/my-likes"
                     class="w-full flex items-center justify-center gap-2 py-2 rounded-lg border border-slate-700 text-slate-300 font-bold hover:border-primary hover:text-primary transition-colors"
                 >
-                    <span class="material-icons text-[18px]">thumb_up</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M7 10v12"></path>
+                        <path
+                            d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"
+                        ></path>
+                    </svg>
                     My Likes
                 </a>
                 <a
                     href="/my-favorites"
                     class="w-full flex items-center justify-center gap-2 py-2 rounded-lg border border-slate-700 text-slate-300 font-bold hover:border-primary hover:text-primary transition-colors"
                 >
-                    <span class="material-icons text-[18px]">bookmark</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"
+                        ></path>
+                    </svg>
                     My Favorites
                 </a>
                 <button
                     id="mobile-logout-btn"
                     class="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-red-500/10 text-red-500 font-bold hover:bg-red-500/20 transition-colors"
                 >
-                    <span class="material-icons text-[18px]">logout</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+                        ></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" x2="9" y1="12" y2="12"></line>
+                    </svg>
                     Logout
                 </button>
             </div>
@@ -339,10 +475,21 @@ const searchablePosts = allPosts.map((post) => ({
         >
             <!-- Search Input -->
             <div class="relative p-4 border-b border-[#224249]">
-                <span
-                    class="absolute left-8 top-1/2 -translate-y-1/2 material-icons text-slate-500"
-                    >search</span
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="absolute left-8 top-1/2 -translate-y-1/2 text-slate-500"
                 >
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                </svg>
                 <input
                     type="text"
                     id="search-input"
@@ -366,9 +513,21 @@ const searchablePosts = allPosts.map((post) => ({
                 class="max-h-[60vh] overflow-y-auto custom-scrollbar p-2 space-y-1"
             >
                 <div class="text-center py-10 text-slate-500">
-                    <span class="material-icons text-4xl mb-2 opacity-20"
-                        >search</span
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="mb-2 opacity-20 mx-auto"
                     >
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
                     <p>Start typing to search articles...</p>
                 </div>
             </div>
@@ -410,14 +569,44 @@ const searchablePosts = allPosts.map((post) => ({
             if (searchInput.value.trim() === "") {
                 searchResults.innerHTML = `
                     <div class="text-center py-10 text-slate-500">
-                        <span class="material-icons text-4xl mb-2 opacity-20">search</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="mb-2 opacity-20 mx-auto"
+                    >
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
                         <p>Start typing to search articles...</p>
                     </div>
                 `;
             } else {
                 searchResults.innerHTML = `
                     <div class="text-center py-10 text-slate-500">
-                        <span class="material-icons text-4xl mb-2 opacity-20">sentiment_dissatisfied</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="mb-2 opacity-20 mx-auto"
+                    >
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                        <line x1="9" x2="9.01" y1="9" y2="9"></line>
+                        <line x1="15" x2="15.01" y1="9" y2="9"></line>
+                    </svg>
                         <p>No results found for "${searchInput.value}"</p>
                     </div>
                 `;
@@ -537,7 +726,7 @@ const searchablePosts = allPosts.map((post) => ({
     const mobileUserSection = document.getElementById("mobile-user-section");
     const mobileLogoutBtn = document.getElementById("mobile-logout-btn");
 
-    function updateAuthUI(session) {
+    function updateAuthUI(session: any) {
         if (!authButtons || !userMenu) return;
 
         if (session) {
@@ -559,7 +748,7 @@ const searchablePosts = allPosts.map((post) => ({
                     initials = user.user_metadata.full_name
                         .split(" ")
                         .filter(Boolean)
-                        .map((n) => n[0])
+                        .map((n: string) => n[0])
                         .join("")
                         .toUpperCase();
                 } else if (user.email) {

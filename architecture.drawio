@@ -37,7 +37,7 @@
         <mxCell id="auth" value="Supabase Auth" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#311b92;" vertex="1" parent="security_layer">
           <mxGeometry x="20" y="40" width="160" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="rls" value="Row Level Security&#xa;(RLS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#311b92;" vertex="1" parent="security_layer">
+        <mxCell id="rls" value="RLS &amp; RBAC&#xa;(Admin/User policies)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#311b92;" vertex="1" parent="security_layer">
           <mxGeometry x="20" y="120" width="160" height="60" as="geometry" />
         </mxCell>
 

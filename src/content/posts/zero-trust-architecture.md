@@ -21,8 +21,11 @@ Zero Trust is not a single product or technology but a security framework based 
 <div class="my-8 rounded-xl border border-primary/20 bg-primary/5 p-6 relative overflow-hidden">
 <div class="absolute top-0 left-0 h-full w-1 bg-primary"></div>
 <div class="flex items-start gap-4">
-<div class="rounded-full bg-primary/20 p-2 text-primary shrink-0">
-<span class="material-symbols-outlined text-[24px]">verified_user</span>
+<div class="rounded-full bg-primary/20 p-2 text-primary shrink-0 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        <path d="m9 12 2 2 4-4"></path>
+    </svg>
 </div>
 <div>
 <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-2 uppercase font-display">Best Practice: Assume Breach</h4>
@@ -43,7 +46,12 @@ Integrating token-based authentication is a fundamental step in verifying identi
 <div class="code-header">
 <span class="code-filename">auth_middleware.py</span>
 <button class="copy-button">
-<span class="material-symbols-outlined text-[14px]">content_copy</span>
+<span class="icon-container inline-flex items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+    </svg>
+</span>
 <span>Copy</span>
 </button>
 </div>

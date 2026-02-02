@@ -138,6 +138,8 @@ const formatDate = (date: Date) => {
                                             src={post.data.authorImage}
                                             alt={post.data.author}
                                             class="h-12 w-12 rounded-full ring-2 ring-white dark:ring-[#102023] object-cover"
+                                            loading="lazy"
+                                            decoding="async"
                                         />
                                     )
                                 }
@@ -161,17 +163,47 @@ const formatDate = (date: Date) => {
                             <div class="ml-auto flex gap-2">
                                 <button
                                     class="rounded-full p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors lg:hidden"
+                                    aria-label="Share"
                                 >
-                                    <span class="material-symbols-outlined"
-                                        >share</span
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
                                     >
+                                        <path
+                                            d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
+                                        ></path>
+                                        <polyline points="16 6 12 2 8 6"
+                                        ></polyline>
+                                        <line x1="12" x2="12" y1="2" y2="15"
+                                        ></line>
+                                    </svg>
                                 </button>
                                 <button
                                     class="rounded-full p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors lg:hidden"
+                                    aria-label="Bookmark"
                                 >
-                                    <span class="material-symbols-outlined"
-                                        >bookmark</span
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
                                     >
+                                        <path
+                                            d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"
+                                        ></path>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
@@ -266,22 +298,33 @@ const formatDate = (date: Date) => {
                 const code = codeElement?.innerText || "";
 
                 const textSpan = button.querySelector("span:last-child");
-                const iconSpan = button.querySelector(
-                    ".material-symbols-outlined",
-                );
+                const iconElement =
+                    button.querySelector(".material-symbols-outlined") ||
+                    button.querySelector("svg") ||
+                    button.querySelector(".icon-container");
 
-                if (code && textSpan && iconSpan) {
+                if (code && textSpan) {
                     try {
                         await navigator.clipboard.writeText(code);
 
                         // Visual feedback
-                        textSpan.textContent = "Copied!";
-                        iconSpan.textContent = "check";
+                        if (textSpan) textSpan.textContent = "Copied!";
+
+                        if (iconElement) {
+                            iconElement.innerHTML = `
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            `;
+                        }
+
                         button.classList.add("text-primary");
 
                         setTimeout(() => {
-                            textSpan.textContent = "Copy";
-                            iconSpan.textContent = "content_copy";
+                            if (textSpan) textSpan.textContent = "Copy";
+                            if (iconElement) {
+                                iconElement.innerHTML = `
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+                                `;
+                            }
                             button.classList.remove("text-primary");
                         }, 2000);
                     } catch (err) {

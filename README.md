@@ -40,7 +40,7 @@ graph TB
 
     subgraph "🔐 Security & Logic"
         Auth["Supabase Auth"]
-        RLS["Row Level Security (RLS)"]
+        RLS["RLS & RBAC (Admin/User policies)"]
     end
 
     subgraph "💾 Persistence Layer"
@@ -86,18 +86,29 @@ The project follows a modular and organized structure:
 ```text
 /
 ├── src/
-│   ├── components/       # Reusable UI components (ArticleCard, Sidebar, etc.)
+│   ├── components/       # Reusable UI components
 │   │   ├── PostSidebarLeft.astro   # Interactive sidebar (Likes, Comments, Bookmarks)
-│   │   ├── Comments.astro          # Real-time-ready comment system
-│   │   └── Header.astro            # Dynamic navigation and user menu
+│   │   ├── PostSidebarRight.astro  # Table of Contents and Related Posts
+│   │   ├── Comments.astro          # Real-time comment system with Admin features
+│   │   ├── ArticleCard.astro       # Blog post layout card
+│   │   ├── Header.astro            # Dynamic navigation
+│   │   └── Footer.astro            # Site footer
 │   ├── content/          # Markdown/MDX content for blog posts
+│   │   └── posts/        # Individual article files
 │   ├── layouts/          # Base HTML structures (Layout.astro)
-│   ├── lib/              # Utility configurations (Supabase client)
-│   ├── pages/            # View routes (Home, Login, Settings, Activity)
-│   │   ├── posts/        # Dynamic blog post routes
-│   │   └── settings.astro # Account management (Update profile, Delete account)
+│   ├── lib/              # Utility configurations
+│   │   └── supabase.ts   # Supabase client configuration
+│   ├── pages/            # View routes
+│   │   ├── posts/        # Dynamic blog post routes ([...slug].astro)
+│   │   ├── index.astro   # Homepage
+│   │   ├── login.astro   # User login
+│   │   ├── register.astro# User registration
+│   │   └── settings.astro# Account management (Update profile, Delete account)
 │   └── styles/           # Global design tokens and Tailwind configuration
 ├── public/               # Static assets (images, icons)
+├── prisma/               # Database ORM
+│   └── schema.prisma     # Database schema definition
+├── supabase_security_policies.sql # SQL for RLS policies, Profiles table, and Admin setup
 └── package.json          # Project dependencies and scripts
 ```
 

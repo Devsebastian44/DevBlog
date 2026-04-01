@@ -1,0 +1,5 @@
+4796d8ca9162cac5f8f4d9156cd5354baa50f32e|docs: add security policy and contribution guidelines in spanish
+9b2099ac79371f583a13612d7be7b8e7a1cb5ce9|feat(tooling): add code quality and development environment configuration
+a38a7c8d666d3686682033960117d6a7416445fb|refactor(config): migrate tailwind config to dedicated vite config file
+7747a4761f57208c9a5486c892f89306556449e8|deps: update dependencies and fix security vulnerabilities
+9a2c1df07f6645ed13a46ee4502ee422212209e9|Version 1

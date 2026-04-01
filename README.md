@@ -1,7 +1,7 @@
 # 🚀 DevBlog - Modern Tech & Architecture Blog
 
 <p align="center">
-  <img src="Logo.png">
+  <img src="docs/Logo.png">
 </p>
 
 DevBlog is a high-performance, premium tech blog built for deep dives into software architecture, ethical hacking, and AI. It features a futuristic dark aesthetic, interactive guest features, and a robust authentication system.
@@ -81,36 +81,39 @@ graph TB
 
 ## 📂 Project Structure
 
-The project follows a modular and organized structure:
+This project follows a strict **DevSecOps** structure to isolate sensitive components from the public repository. 
+
+### 🔒 Core Architecture (GitLab - Private Lab)
 
 ```text
 /
-├── src/
-│   ├── components/       # Reusable UI components
-│   │   ├── PostSidebarLeft.astro   # Interactive sidebar (Likes, Comments, Bookmarks)
-│   │   ├── PostSidebarRight.astro  # Table of Contents and Related Posts
-│   │   ├── Comments.astro          # Real-time comment system with Admin features
-│   │   ├── ArticleCard.astro       # Blog post layout card
-│   │   ├── Header.astro            # Dynamic navigation
-│   │   └── Footer.astro            # Site footer
-│   ├── content/          # Markdown/MDX content for blog posts
-│   │   └── posts/        # Individual article files
-│   ├── layouts/          # Base HTML structures (Layout.astro)
-│   ├── lib/              # Utility configurations
-│   │   └── supabase.ts   # Supabase client configuration
-│   ├── pages/            # View routes
-│   │   ├── posts/        # Dynamic blog post routes ([...slug].astro)
-│   │   ├── index.astro   # Homepage
-│   │   ├── login.astro   # User login
-│   │   ├── register.astro# User registration
-│   │   └── settings.astro# Account management (Update profile, Delete account)
-│   └── styles/           # Global design tokens and Tailwind configuration
-├── public/               # Static assets (images, icons)
-├── prisma/               # Database ORM
-│   └── schema.prisma     # Database schema definition
-├── supabase_security_policies.sql # SQL for RLS policies, Profiles table, and Admin setup
-└── package.json          # Project dependencies and scripts
+├── configs/              # Sensitive configurations and DB rules
+│   └── supabase_security_policies.sql
+├── diagrams/             # Technical architecture assets
+│   └── architecture.drawio
+├── docs/                 # Documentation hub (Logo, CONTRIBUTING, SECURITY)
+├── scripts/              # DevSecOps Automation Scripts
+│   └── publish_public.ps1# Deployment sanitization script
+├── src/                  # Core frontend source (Astro pages, components, layouts)
+├── tests/                # CI/CD validations and mock e2e workflows
+├── .gitlab-ci.yml        # Private Lab's Pipeline definitions
+├── public/               # Static web assets
+├── prisma/               # Database ORM schema
+└── package.json          # Dependencies
 ```
+
+### 🌐 Sanitized Architecture (GitHub - Public Portfolio)
+
+Sensitive folders (`tests/`, `configs/`, `scripts/`, `.gitlab-ci.yml`) are stripped securely using the DevSecOps flow before the codebase is pushed to the public space.
+
+## 🛡️ DevSecOps & Publishing Flow
+
+The strategy enforces a **Private Lab as Source of Truth** model:
+
+1. **Development & CI/CD**: All work is designed, committed, and tested privately in GitLab. The `.gitlab-ci.yml` pipeline covers security audits and tests.
+2. **Automated Sanitization**: The script `scripts/publish_public.ps1` is called to prepare the release.
+3. **Filtering**: The script filters out CI setups, backend configuration structures, and validation test paths.
+4. **Public Portfolio Push**: A force push of the sanitized `main` state is made to GitHub's `main` branch, updating the public portfolio without exposing sensitive laboratory implementations.
 
 ## ✨ Key Features
 

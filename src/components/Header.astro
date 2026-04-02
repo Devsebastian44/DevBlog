@@ -5,7 +5,7 @@ const allPosts = await getCollection("posts");
 const searchablePosts = allPosts.map((post) => ({
     title: post.data.title,
     description: post.data.description,
-    slug: post.slug,
+    slug: post.id,
     category: post.data.category,
     tags: post.data.tags || [],
 }));

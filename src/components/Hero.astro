@@ -53,7 +53,7 @@ const latestPost = allPosts.sort(
         <div class="mt-10 flex justify-center gap-4">
             <a
                 class="px-8 py-3 rounded-lg bg-primary hover:bg-cyan-400 text-white dark:text-background-dark font-semibold transition-all shadow-[0_0_20px_rgba(13,204,242,0.3)] hover:shadow-[0_0_30px_rgba(13,204,242,0.5)]"
-                href={latestPost ? `/posts/${latestPost.slug}` : "/archive"}
+                href={latestPost ? `/posts/${latestPost.id}` : "/archive"}
             >
                 Start Reading
             </a>

@@ -71,7 +71,7 @@ const formatDate = (date: Date) => {
 							authorImage={featuredPost.data.authorImage}
 							date={formatDate(featuredPost.data.pubDate)}
 							readTime={featuredPost.data.readTime}
-							slug={featuredPost.slug}
+							slug={featuredPost.id}
 						/>
 					)
 				}
@@ -88,7 +88,7 @@ const formatDate = (date: Date) => {
 								author={post.data.author}
 								date={formatDate(post.data.pubDate)}
 								readTime={post.data.readTime}
-								slug={post.slug}
+								slug={post.id}
 							/>
 						))
 					}

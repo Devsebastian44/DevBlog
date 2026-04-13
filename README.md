@@ -1,160 +1,380 @@
-# 🚀 DevBlog - Modern Tech & Architecture Blog
+# 📝 DevBlog
 
-<p align="center">
-  <img src="docs/Logo.png">
-</p>
+![Astro](https://img.shields.io/badge/Astro-6.x-BC52EE?style=flat&logo=astro&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat&logo=typescript&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-BaaS-3ECF8E?style=flat&logo=supabase&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.x-38B2AC?style=flat&logo=tailwindcss&logoColor=white)
+![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?style=flat&logo=vercel&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat&logo=opensourceinitiative&logoColor=white)
 
-DevBlog is a high-performance, premium tech blog built for deep dives into software architecture, ethical hacking, and AI. It features a futuristic dark aesthetic, interactive guest features, and a robust authentication system.
-
-## 🛠️ Tech Stack
-
-![Astro](https://img.shields.io/badge/Astro-BC52EE?style=for-the-badge&logo=astro&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-
-- **[Astro 5.0+](https://astro.build/)**: The web framework for content-driven websites. Focused on performance with zero-JavaScript by default.
-- **[Supabase](https://supabase.com/)**: Backend-as-a-Service providing PostgreSQL database, Secure Auth, and Real-time capabilities.
-- **[Tailwind CSS 4.0](https://tailwindcss.com/)**: A utility-first CSS framework for rapid UI development with a custom premium design system.
-- **[Vite](https://vitejs.dev/)**: Next-generation frontend tooling for a fast development experience.
-- **[TypeScript](https://www.typescriptlang.org/)**: Static type checking for robust and maintainable code.
-
-## 🏗️ System Architecture
-
-DevBlog follows a modern decoupled architecture, combining static content with dynamic real-time features.
-
-### 🧩 Architecture Diagram
-
-```mermaid
-graph TB
-    subgraph "🌐 Client Layer"
-        UI["Astro UI (SSR/Hybrid)"]
-        SDK["Supabase JS SDK"]
-        LS["Local Storage (Guest State)"]
-    end
-
-    subgraph "⚡ Edge / Server Layer"
-        Astro["Astro Server Engine"]
-        API["Edge Functions / RPC"]
-    end
-
-    subgraph "🔐 Security & Logic"
-        Auth["Supabase Auth"]
-        RLS["RLS & RBAC (Admin/User policies)"]
-    end
-
-    subgraph "💾 Persistence Layer"
-        DB[("PostgreSQL Database")]
-        Prisma["Prisma ORM (Migrations)"]
-    end
-
-    %% Interactions
-    UI <--> SDK
-    SDK <--> Auth
-    SDK <--> RLS
-    RLS <--> DB
-    UI <--> LS
-    
-    Astro -->|SSG| UI
-    Astro <--> API
-    API <--> DB
-    
-    Prisma -.->|Schema Sync| DB
-
-    %% Styling
-    classDef client fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
-    classDef server fill:#fff3e0,stroke:#e65100,stroke-width:2px;
-    classDef security fill:#ede7f6,stroke:#311b92,stroke-width:2px;
-    classDef storage fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
-
-    class UI,SDK,LS client;
-    class Astro,API server;
-    class Auth,RLS security;
-    class DB,Prisma storage;
-```
-
-### ⚙️ How it works:
-- **Static First**: Blog posts are pre-rendered during build time for maximum speed and SEO.
-- **Dynamic Layers**: Interactivity (Likes, Comments, Bookmarks) is handled via client-side scripts connecting directly to Supabase.
-- **Secure Auth**: User management and the "Danger Zone" use Supabase Auth and secure PostgreSQL functions.
-- **Data Integrity**: Prisma handles the schema definitions and migrations, while Supabase RLS ensures only authorized users can modify their data.
-
-## 📂 Project Structure
-
-This project follows a strict **DevSecOps** structure to isolate sensitive components from the public repository. 
-
-### 🔒 Core Architecture (GitLab - Private Lab)
-
-```text
-/
-├── configs/              # Sensitive configurations and DB rules
-│   └── supabase_security_policies.sql
-├── diagrams/             # Technical architecture assets
-│   └── architecture.drawio
-├── docs/                 # Documentation hub (Logo, CONTRIBUTING, SECURITY)
-├── scripts/              # DevSecOps Automation Scripts
-│   └── publish_public.ps1# Deployment sanitization script
-├── src/                  # Core frontend source (Astro pages, components, layouts)
-├── tests/                # CI/CD validations and mock e2e workflows
-├── .gitlab-ci.yml        # Private Lab's Pipeline definitions
-├── public/               # Static web assets
-├── prisma/               # Database ORM schema
-└── package.json          # Dependencies
-```
-
-### 🌐 Sanitized Architecture (GitHub - Public Portfolio)
-
-Sensitive folders (`tests/`, `configs/`, `scripts/`, `.gitlab-ci.yml`) are stripped securely using the DevSecOps flow before the codebase is pushed to the public space.
-
-## 🛡️ DevSecOps & Publishing Flow
-
-The strategy enforces a **Private Lab as Source of Truth** model:
-
-1. **Development & CI/CD**: All work is designed, committed, and tested privately in GitLab. The `.gitlab-ci.yml` pipeline covers security audits and tests.
-2. **Automated Sanitization**: The script `scripts/publish_public.ps1` is called to prepare the release.
-3. **Filtering**: The script filters out CI setups, backend configuration structures, and validation test paths.
-4. **Public Portfolio Push**: A force push of the sanitized `main` state is made to GitHub's `main` branch, updating the public portfolio without exposing sensitive laboratory implementations.
-
-## ✨ Key Features
-
-- **Interactive Post Sidebar**: Real-time counter for Likes, Comments, and Bookmarks.
-- **Guest Support**: Anonymous users can interact (likes, favorites, comments) via local tracking.
-- **Advanced Auth**: Secure Registration, Login, and personalized "My Activity" pages.
-- **Danger Zone**: A secure, custom-built account deletion flow with anti-cache RPC logic.
-- **Premium UI**: Futuristic design with Aldrich typography, glassmorphism, and smooth transitions.
-
-## 🚀 Getting Started
-
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-2. **Configure environment**:
-   Create a `.env` file with your Supabase credentials:
-   ```env
-   PUBLIC_SUPABASE_URL=your_url
-   PUBLIC_SUPABASE_ANON_KEY=your_key
-   ```
-
-3. **Run development server**:
-   ```bash
-   npm run dev
-   ```
-
-## 🚀 Deployment (Vercel)
-
-1.  **Environment Variables**: In your Vercel project settings, add the following:
-    - `PUBLIC_SUPABASE_URL`: Your Supabase Project URL.
-    - `PUBLIC_SUPABASE_ANON_KEY`: Your Supabase Anonymous API Key.
-2.  **Redeploy**: Ensure you redeploy the project after adding these variables to apply the changes.
-
-## 🤝 Contributing
-
-Developed with ❤️ for the Tech Community.
+> 🌐 **Live:** [devblog44.vercel.app](https://devblog44.vercel.app)
 
 ---
 
-📜 Licencia
+## 🧠 Overview
 
-Este proyecto está bajo la licencia MIT. Puedes usarlo libremente, siempre citando al autor.
+**DevBlog** es una plataforma de contenido técnico de alto rendimiento construida
+con **Astro 6** en modo híbrido (SSR + SSG), orientada a publicaciones sobre
+programación, ciberseguridad, ciencia de datos e inteligencia artificial. Combina
+la generación estática de contenido para máxima velocidad y SEO con capas dinámicas
+de interacción en tiempo real respaldadas por **Supabase** como Backend-as-a-Service.
+
+El proyecto integra un sistema completo de autenticación de usuarios (registro,
+login, sesión persistente), interacciones sociales anónimas para visitantes sin
+cuenta (likes, marcadores, comentarios vía `localStorage`), y un sistema de
+actividad personalizada por usuario. La base de datos PostgreSQL de Supabase se
+gestiona con **Prisma ORM** para migraciones y tipado del esquema, mientras que
+las políticas **RLS (Row-Level Security)** garantizan que cada usuario solo acceda
+y modifique sus propios datos.
+
+El stack de desarrollo incluye tipado estricto con **TypeScript 5**, linting con
+**ESLint** configurado para Astro y TypeScript, formateo con **Prettier**, y tests
+E2E con **Playwright**. El proyecto sigue una arquitectura DevSecOps de doble
+repositorio: GitLab como fuente de verdad privada y GitHub como espejo público
+sanitizado.
+
+---
+
+## ⚙️ Features
+
+- **Renderizado híbrido SSR + SSG** con Astro 6 y Vite: las páginas de artículos
+  se generan estáticamente en build time para máxima velocidad, mientras que las
+  rutas dinámicas (perfil, actividad) se sirven con SSR.
+- **Sistema de autenticación completo** vía Supabase Auth: registro con email,
+  login seguro, gestión de sesión persistente y página de actividad personalizada
+  por usuario autenticado.
+- **Interacciones para usuarios invitados** — Visitantes sin cuenta pueden dar
+  likes, guardar favoritos y escribir comentarios, con estado rastreado localmente
+  vía `localStorage` sin necesidad de registro.
+- **Panel lateral interactivo por artículo** con contadores en tiempo real de
+  likes, comentarios y marcadores, actualizado mediante el SDK de Supabase en
+  el cliente.
+- **Danger Zone — eliminación de cuenta** con flujo anti-caché implementado
+  mediante funciones RPC personalizadas en Supabase para garantizar borrado
+  completo y seguro de todos los datos del usuario.
+- **Políticas RLS (Row-Level Security)** en PostgreSQL que aseguran a nivel de
+  base de datos que cada usuario solo puede leer y modificar sus propios registros,
+  sin depender únicamente de validaciones del lado del cliente.
+- **Gestión del esquema con Prisma ORM** en la carpeta `prisma/`, permitiendo
+  migraciones versionadas y tipado automático de las entidades de la base de datos.
+- **Diseño premium futurista** con estética dark, glassmorphism, transiciones
+  suaves, tipografía Aldrich y sistema de diseño construido sobre Tailwind CSS 4
+  con el plugin `@tailwindcss/typography` para renderizado de contenido Markdown.
+- **Tests E2E con Playwright** (`@playwright/test`) configurados como dependencia
+  de desarrollo para validar flujos críticos de usuario.
+- **Pipeline de calidad completo** con scripts `lint`, `lint:fix`, `format`,
+  `format:check` y `type-check` ejecutables desde `package.json`.
+- **Docker-ready** con `.dockerignore` configurado para containerización del
+  entorno de producción.
+- **Contenido temático** cubriendo programación, ciberseguridad, ciencia de
+  datos e inteligencia artificial.
+
+---
+
+## 🛠️ Tech Stack
+
+| Categoría | Tecnología | Versión |
+|---|---|---|
+| Framework web | Astro (SSR/SSG híbrido) | 6.1.3+ |
+| Lenguaje | TypeScript | 5.9+ |
+| Estilos | Tailwind CSS + Typography | 4.x |
+| Build tool | Vite (vía Astro) | — |
+| BaaS / Auth | Supabase (PostgreSQL + Auth + RLS) | 2.93+ |
+| ORM / Migraciones | Prisma | — |
+| Linting | ESLint + @typescript-eslint | — |
+| Formateo | Prettier | — |
+| Type checking | TypeScript `tsc --noEmit` | — |
+| Tests E2E | Playwright | 1.59+ |
+| Despliegue | Vercel | — |
+| Contenedor | Docker (`.dockerignore`) | — |
+| Node versioning | `.nvmrc` | — |
+| Licencia | MIT | — |
+
+---
+
+## 📦 Installation
+
+### Prerrequisitos
+
+- **Node.js** (versión fijada en `.nvmrc`)
+- **npm** actualizado
+- Una cuenta en **Supabase** con un proyecto creado y las tablas del esquema
+  aplicadas mediante Prisma
+
+### 1. Clonar el repositorio
+
+```bash
+# Repositorio público (portafolio sanitizado)
+git clone https://github.com/devsebastian44/DevBlog.git
+
+# Repositorio completo de laboratorio (fuente de verdad)
+git clone https://gitlab.com/group-programming-lab/DevBlog.git
+
+cd DevBlog
+```
+
+### 2. Usar la versión correcta de Node
+
+```bash
+nvm use
+```
+
+### 3. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 4. Configurar variables de entorno
+
+Copia el archivo de ejemplo y completa tus credenciales de Supabase:
+
+```bash
+cp .env.example .env
+```
+
+```env
+# .env — nunca incluir en el repositorio
+PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+PUBLIC_SUPABASE_ANON_KEY=tu_anon_key
+```
+
+### 5. Aplicar el esquema de base de datos (Prisma)
+
+```bash
+# Desde el entorno de laboratorio (GitLab)
+npx prisma db push
+# o para entornos de producción
+npx prisma migrate deploy
+```
+
+---
+
+## ▶️ Usage
+
+### Servidor de desarrollo
+
+```bash
+npm run dev
+```
+
+Abre [http://localhost:4321](http://localhost:4321) en tu navegador.
+
+> El puerto por defecto de Astro es `4321`.
+
+### Build de producción
+
+```bash
+npm run build
+npm run preview   # Previsualizar el build localmente
+```
+
+### Comandos de calidad de código
+
+```bash
+# Verificar errores de linting
+npm run lint
+
+# Corregir errores de linting automáticamente
+npm run lint:fix
+
+# Formatear todos los archivos
+npm run format
+
+# Verificar formato sin modificar
+npm run format:check
+
+# Verificar tipos TypeScript
+npm run type-check
+```
+
+### Despliegue en Vercel
+
+1. Conecta el repositorio a un proyecto en [Vercel](https://vercel.com).
+2. Añade las variables de entorno en `Settings → Environment Variables`:
+   - `PUBLIC_SUPABASE_URL`
+   - `PUBLIC_SUPABASE_ANON_KEY`
+3. Vercel detecta automáticamente Astro y configura el build (`astro build`).
+4. Redespliega tras cualquier cambio en las variables de entorno.
+
+---
+
+## 📁 Project Structure
+
+```
+DevBlog/
+│
+├── src/                          # Código fuente principal de la aplicación
+│   ├── pages/                    # Rutas de Astro (SSR + SSG)
+│   │   ├── index.astro           # Página de inicio / listado de posts
+│   │   ├── blog/
+│   │   │   └── [slug].astro      # Página dinámica de artículo individual
+│   │   ├── auth/                 # Rutas de autenticación (login, registro)
+│   │   ├── profile/              # Perfil y página "Mi Actividad"
+│   │   └── api/                  # Endpoints de Astro (server-side)
+│   ├── components/               # Componentes reutilizables de Astro/TS
+│   │   ├── blog/                 # Componentes específicos de artículos
+│   │   │   └── PostSidebar.astro # Panel lateral con likes, comentarios, bookmarks
+│   │   ├── auth/                 # Formularios de login y registro
+│   │   └── ui/                   # Componentes de UI genéricos (glassmorphism)
+│   ├── layouts/                  # Layouts base de la aplicación
+│   ├── lib/
+│   │   └── supabase.ts           # Inicialización y cliente de Supabase JS SDK
+│   └── styles/                   # Estilos globales CSS
+│
+├── prisma/                       # ORM y esquema de base de datos
+│   └── schema.prisma             # Definición de modelos y relaciones PostgreSQL
+│
+├── public/                       # Assets estáticos (imágenes, favicon, fonts)
+│
+├── docs/                         # Documentación del proyecto
+│   └── Logo.png                  # Logo oficial de DevBlog
+│
+├── diagrams/                     # Diagramas de arquitectura técnica
+│
+├── .vscode/                      # Configuración de editor recomendada
+│
+├── .dockerignore                 # Exclusiones para build de Docker
+├── .editorconfig                 # Configuración consistente entre editores
+├── .env.example                  # Plantilla de variables de entorno
+├── .eslintrc.json                # ESLint con @typescript-eslint strict
+├── .gitattributes                # Normalización de line endings
+├── .gitignore                    # Exclusiones de Git
+├── .nvmrc                        # Versión de Node.js fijada
+├── .prettierrc                   # Formato: singleQuote, semi, printWidth 80
+├── astro.config.mjs              # Configuración de Astro + Tailwind vía Vite
+├── tsconfig.json                 # Configuración del compilador TypeScript
+├── package.json                  # Dependencias y scripts del proyecto
+├── LICENSE                       # Licencia MIT
+└── README.md                     # Documentación principal
+```
+
+---
+
+## 🔐 Security
+
+### Row-Level Security (RLS) en Supabase
+
+Todas las tablas de interacción del usuario (likes, comentarios, marcadores,
+datos de perfil) tienen políticas RLS activas en PostgreSQL que garantizan, a
+nivel de base de datos, que un usuario autenticado solo pueda leer y modificar
+sus propios registros. Esto proporciona una capa de seguridad independiente
+de la lógica de cliente.
+
+### Danger Zone y eliminación de cuenta
+
+El flujo de eliminación de cuenta está implementado mediante **funciones RPC
+personalizadas en Supabase** en lugar de llamadas directas de cliente, lo que
+previene condiciones de carrera y garantiza el borrado completo y transaccional
+de todos los datos asociados al usuario (posts, likes, comentarios, marcadores).
+
+### Gestión de credenciales
+
+Las credenciales de Supabase se gestionan exclusivamente mediante variables de
+entorno (`.env`), excluidas del repositorio vía `.gitignore`. El archivo
+`.env.example` documenta las variables requeridas sin exponer valores reales.
+Las variables prefijadas con `PUBLIC_` se exponen al cliente de forma controlada
+por Astro; ninguna clave de servicio con permisos elevados debe usarse con este
+prefijo.
+
+### Autenticación de usuarios invitados
+
+Las interacciones de usuarios anónimos se rastrean exclusivamente en
+`localStorage` del navegador, sin crear registros en la base de datos hasta
+que el usuario opte por registrarse. Esto evita la acumulación de datos no
+verificados en el backend.
+
+### Linting y type safety
+
+La configuración de ESLint incluye las reglas `@typescript-eslint/no-unused-vars`
+como error y `@typescript-eslint/no-explicit-any` como advertencia, reforzando
+la seguridad de tipos en toda la codebase. El script `type-check` ejecuta
+`tsc --noEmit` para detectar errores de tipado sin emitir archivos.
+
+---
+
+## 🌐 Repository Architecture
+
+Este proyecto sigue una arquitectura distribuida de doble repositorio, separando
+el laboratorio de desarrollo activo del portafolio público:
+
+**GitHub** actúa como espejo público sanitizado — expone el código fuente del
+frontend, la configuración del proyecto y la documentación, orientado a la
+presentación profesional del portafolio.
+
+**GitLab** es la fuente de verdad y entorno de laboratorio completo: contiene
+las políticas de seguridad SQL de Supabase, la configuración privada de CI/CD
+(`.gitlab-ci.yml`), la batería de tests E2E con Playwright, los scripts de
+automatización DevSecOps y toda la lógica de infraestructura que no debe
+exponerse públicamente.
+
+### 🔗 Full Source Code
+
+👉 Código completo disponible en GitLab:
+[https://gitlab.com/group-programming-lab/DevBlog](https://gitlab.com/group-programming-lab/DevBlog)
+
+---
+
+## 🚀 Roadmap
+
+Mejoras sugeridas a partir de la arquitectura y dependencias detectadas en el código:
+
+- **Búsqueda full-text de artículos** integrada con las capacidades de búsqueda
+  vectorial de Supabase (`pg_vector`) para búsqueda semántica de contenido.
+- **Sistema de categorías y etiquetas** con páginas filtradas por tema
+  (programación, ciberseguridad, IA, data science) y conteo de artículos por tag.
+- **RSS Feed** generado automáticamente por Astro para suscripción al blog.
+- **Modo oscuro / claro** con toggle persistido en `localStorage` y respeto
+  al `prefers-color-scheme` del sistema operativo.
+- **Panel de administración** para gestión de posts, moderación de comentarios
+  y visualización de métricas de engagement por artículo.
+- **Comentarios anidados** con soporte de respuestas a comentarios específicos
+  y notificaciones en tiempo real vía Supabase Realtime.
+- **Open Graph dinámico** con imágenes de preview generadas server-side para
+  cada artículo, mejorando el compartido en redes sociales.
+- **Tests E2E con Playwright** ampliados para cubrir los flujos de autenticación,
+  interacciones sociales y el Danger Zone de eliminación de cuenta.
+- **Internacionalización (i18n)** con soporte nativo de Astro para contenido
+  en español e inglés.
+- **Sitemap automático** generado con `@astrojs/sitemap` para optimización SEO.
+
+---
+
+## 📄 License
+
+Este proyecto está distribuido bajo la licencia **MIT**.
+
+Puedes usar, copiar, modificar, fusionar, publicar, distribuir y sublicenciar
+el software libremente, siempre que se incluya el aviso de copyright original.
+
+Copyright © 2025 **Sebastián Zhunaula** (devsebastian44)
+
+---
+
+## 👨‍💻 Author
+
+<table>
+  <tr>
+    <td align="center">
+      <b>Sebastián Zhunaula</b><br/>
+      <sub>Full-Stack Developer · Frontend Specialist · Content Creator</sub><br/><br/>
+      <a href="https://github.com/devsebastian44">
+        <img src="https://img.shields.io/badge/GitHub-devsebastian44-black?style=flat&logo=github" />
+      </a>
+      <br/>
+      <a href="https://gitlab.com/group-programming-lab">
+        <img src="https://img.shields.io/badge/GitLab-group--programming--lab-FC6D26?style=flat&logo=gitlab" />
+      </a>
+      <br/>
+      <a href="https://devblog44.vercel.app">
+        <img src="https://img.shields.io/badge/Blog-devblog44.vercel.app-000?style=flat&logo=vercel" />
+      </a>
+    </td>
+  </tr>
+</table>
+
+> Este proyecto forma parte de un portafolio de desarrollo web full-stack,
+> demostrando integración moderna de Astro 6, Supabase, Tailwind CSS 4,
+> TypeScript estricto y Prisma ORM en una plataforma de contenido técnico
+> con autenticación completa, interacciones sociales en tiempo real y
+> despliegue en producción sobre Vercel.

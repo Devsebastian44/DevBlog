@@ -8,8 +8,8 @@ test.describe('DevBlog - Authentication Flow', () => {
     await page.goto('/login');
 
     // Phase 2: Assertion Check
-    const loginHeader = page.locator('h1');
-    await expect(loginHeader).toContainText('Log In');
+    const loginHeader = page.getByRole('heading', { name: 'Welcome Back' });
+    await expect(loginHeader).toBeVisible();
   });
 
   test('Danger Zone - should show account deletion warning', async ({
@@ -18,7 +18,7 @@ test.describe('DevBlog - Authentication Flow', () => {
     // Note: This test would normally require a session
     // For now, we just verify the login page is accessible
     await page.goto('/login');
-    const loginHeader = page.locator('h1');
+    const loginHeader = page.getByRole('heading', { name: 'Welcome Back' });
     await expect(loginHeader).toBeVisible();
   });
 });
